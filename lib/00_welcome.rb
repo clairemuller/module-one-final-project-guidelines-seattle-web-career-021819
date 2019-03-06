@@ -8,28 +8,34 @@ def get_user_name
     puts "Have you been here before? (y/n)"
     choice = gets.chomp.downcase
     if choice == "y" || choice == "yes"
+      puts
       puts "Please enter username:"
       name = gets.chomp
       run = false
       user = User.find_by(name: name)
       if user == nil
+        puts
         puts "cannot find user"
       else
+        puts
         puts "Welcome back #{user.name}"
         return user
       end
     elsif choice == "n" || choice == "no"
+      puts
       puts "Create username:"
       name = gets.chomp
       run = false
       return User.create(name: name)
     else
+      puts
       puts "Please enter (y)es or (n)o"
     end
   end
 end
 
 def main_menu
+  puts
   puts "Please pick a number:"
   puts "0. exit"
   puts "1. search for a recipe by ingredient"
