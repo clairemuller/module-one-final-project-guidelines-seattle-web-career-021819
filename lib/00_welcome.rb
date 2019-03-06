@@ -18,7 +18,7 @@ def get_user_name
         puts "Welcome back #{user.name}"
         return user
       end
-    elsif choice == "n"
+    elsif choice == "n" || choice == "no"
       puts "Create username:"
       name = gets.chomp
       run = false
@@ -30,7 +30,7 @@ def get_user_name
 end
 
 def main_menu
-  puts "Please make a selection"
+  puts "Please pick a number:"
   puts "0. exit"
   puts "1. search for a recipe by ingredient"
   puts "2. view favorite recipes"
@@ -48,6 +48,7 @@ def menu_selection(choice)
     get_ingredient_from_user
   when "2"
     # view user's favorite recipes
+    view_user_favorites
   when "3"
     # view most popular recipes
   else
