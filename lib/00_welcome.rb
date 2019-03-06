@@ -56,6 +56,7 @@ def user_equals_nil
 end
 
 def main_menu
+  puts
   puts "Please pick a number:"
   puts "0. exit"
   puts "1. search for a recipe by ingredient"
