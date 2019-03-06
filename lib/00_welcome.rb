@@ -1,29 +1,34 @@
 def welcome
-  puts "Welcome to our program!"
+  puts "Hello!  Welcome to Foodflix!"
+end
 
+def get_user_name
   run = true
   while run
     puts "Have you been here before? (y/n)"
     choice = gets.chomp.downcase
-
-    if choice == "y"
+    if choice == "y" || choice == "yes"
       puts "Please enter username:"
       name = gets.chomp
-      username = User.find_by(name: name)
       run = false
-    elsif choice == "n"
+      user = User.find_by(name: name)
+      if user == nil
+        puts "cannot find user"
+      else
+        return user
+      end
+    elsif choice == "n" || choice == "no"
       puts "Create username:"
       name = gets.chomp
-      username = User.create(name: name)
       run = false
+      return User.create(name: name)
     else
-      puts "Invalid input!"
+      puts "Please enter (y)es or (n)o"
     end
   end
-  menu
 end
 
-def menu
+def main_menu
   puts "Please pick a number:"
   puts "0. exit"
   puts "1. search for a recipe by ingredient"
@@ -34,14 +39,16 @@ def menu
 end
 
 def menu_selection(choice)
-  if choice == "0" || "exit"
-
-  elsif choice == "1" || "search"
+  case choice
+  when "0", "exit"
+    puts "Goodbye! Happy cooking!"
+  when "1", "search"
     # search for a recipe by ingredient
     get_ingredient_from_user
-  elsif choice == "2"
+  when "2"
     # view user's favorite recipes
-  elsif choice == "3"
+    view_user_favorites
+  when "3"
     # view most popular recipes
   else
     puts "Invalid input!"
