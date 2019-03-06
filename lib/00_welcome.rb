@@ -1,31 +1,57 @@
 def welcome
   puts "Hello!  Welcome to Foodflix!"
+  puts splashpage
+end
+
+def get_user_name_from_db
+  puts "Please enter username:"
+  name = gets.chomp
+  User.find_by(name: name)
+end
+
+def create_user_name
+  puts "Create username:"
+  name = gets.chomp
+  User.create(name: name)
 end
 
 def get_user_name
   run = true
+  puts "Have you been here before? (y/n)"
+  choice = gets.chomp.downcase
+  if choice == "y" || choice == "yes"
   while run
-    puts "Have you been here before? (y/n)"
-    choice = gets.chomp.downcase
-    if choice == "y" || choice == "yes"
-      puts "Please enter username:"
-      name = gets.chomp
-      run = false
-      user = User.find_by(name: name)
-      if user == nil
-        puts "cannot find user"
-      else
-        puts "Welcome back #{user.name}"
-        return user
-      end
-    elsif choice == "n" || choice == "no"
-      puts "Create username:"
-      name = gets.chomp
-      run = false
-      return User.create(name: name)
+    user = get_user_name_from_db
+    if user == nil
+      user_equals_nil
     else
-      puts "Please enter (y)es or (n)o"
+      puts "Welcome back #{user.name}"
+      run = false
+      return user
     end
+  end
+  elsif choice == "n" || choice == "no"
+    user = create_user_name
+    puts "Welcome to Foodflix, #{user.name}!"
+  else
+    puts "Please enter (y)es or (n)o"
+  end
+end
+
+def user_equals_nil
+  puts "cannot find user"
+  puts "Would you like to:"
+  puts "1. search again"
+  puts "2. create new user"
+  choice = gets.chomp
+  istrue = true
+  case choice
+  when "1"
+    get_user_name
+  when "2"
+    create_user_name
+  else
+    puts "Please select either 1 or 2"
   end
 end
 
