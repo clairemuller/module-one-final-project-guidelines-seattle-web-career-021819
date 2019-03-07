@@ -8,7 +8,9 @@ def view_user_favorites
     puts
     main_menu
   else
-    faves
+    faves.each do |fave|
+      puts fave.recipe.name
+    end
   end
 
 end
