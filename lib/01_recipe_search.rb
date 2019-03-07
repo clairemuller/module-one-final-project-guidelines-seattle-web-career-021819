@@ -1,25 +1,30 @@
-# ingredient = get_ingredient_from_user
-page_num = 1
 
 def get_ingredient_from_user
   puts
   puts "Please enter an ingredient:"
   ingredient = gets.chomp.downcase
-  get_recipes_by_ingredient(ingredient, page_num)
+  create_recipe_array(ingredient)
 end
 
-def get_recipes_by_ingredient(ingredient, page_num)
-  url = 'http://www.recipepuppy.com/api/?i='
-  response_string = RestClient.get(url + ingredient + "&p=#{page_num}")
-  response_hash = JSON.parse(response_string)
-  recipes = response_hash["results"]
-
-  recipes.each_with_index do |xx, i|
-    puts "#{i+1}. #{xx["title"].strip}"
-    puts "ingredients: #{xx["ingredients"]}"
-    puts
+def create_recipe_array(ingredient)
+  recipe_array = []
+  num = 0
+  Recipe.all.each do |recipe|
+    if recipe.ingredients.include?(ingredient)
+      recipe_array << recipe.name
+    end
   end
-  recipe_menu
+  recipe_array
+  puts "There are #{recipe_array.length} recipes that include #{ingredient}.
+  How many would you like to view?"
+  choice = gets.chomp
+  view_recipes(choice, recipe_array)
+  binding.pry
+end
+
+def view_recipes(choice, recipe_array)
+  puts "Here you go!"
+  recipe_array
 end
 
 def recipe_menu
@@ -40,7 +45,7 @@ def recipe_menu
     # see the next ten recipes
     # still working on this method
     page_num += 1
-    get_recipes_by_ingredient(ingredient, page_num)
+    get_recipes_by_ingredient(ingredient)
   else
     puts "Invalid choice!"
   end
@@ -58,9 +63,4 @@ def save_to_favorites
   else
     puts "Invalid choice!"
   end
-end
-
-def next_ten
-  binding.pry
-
 end
