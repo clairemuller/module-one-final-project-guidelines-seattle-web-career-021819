@@ -3,6 +3,7 @@ def welcome
 end
 
 def get_user_name
+  puts
   puts "Have you been here before? (y)es/(n)o"
   choice = gets.chomp.downcase
   if choice.start_with?("y")
@@ -10,13 +11,13 @@ def get_user_name
   elsif choice.start_with?("n")
     create_user_name
   else
-    puts
-    puts "Please enter (y)es or (n)o"
+    puts "Please enter (y)es or (n)o:"
     get_user_name
   end
 end
 
 def get_user_name_from_db
+  puts
   print "Please enter your username: "
   name = gets.chomp
   user = User.find_by(name: name)
@@ -72,7 +73,7 @@ end
 
 def user_equals_nil
   puts
-  puts "cannot find user"
+  puts "We can't find that user!"
   puts "Would you like to:"
   puts "1. search again"
   puts "2. create new user"
@@ -116,6 +117,7 @@ def menu_selection(choice)
     view_user_favorites
   when "3"
     # view most popular recipes
+    most_favorite_recipes
   else
     puts
     puts "Invalid input!"
