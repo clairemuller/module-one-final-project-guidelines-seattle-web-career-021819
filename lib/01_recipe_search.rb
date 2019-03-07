@@ -5,6 +5,7 @@ def recipe_search
   selected_recipes = view_recipes(recipe_array, limit)
   rms = recipe_menu
   recipe_menu_selection(rms, selected_recipes)
+  main_menu
 end
 
 def get_ingredient_from_user
@@ -56,45 +57,70 @@ def recipe_menu_selection(choice, selected_recipes=nil)
   case choice
   when "0"
     # return to main menu
-    main_menu
+    false
   when "1", "save"
     # save a recipe to favorites
     save_to_favorites(selected_recipes)
+    true
   else
     puts "Invalid choice!"
+    true
   end
 end
 
-def save_to_favorites(selected_recipes)
-  puts
-  puts "Which recipe would you like to save? Type the number:"
-  choice = gets.chomp
-  recipe = selected_recipes[choice.to_i - 1]
-
+def in_user_favorites?(recipe)
   # checks user's favorites to make sure it hasn't been added yet
   $username.favorites.each do |fav|
     if fav.recipe_id == recipe.id
+      return true
+    end
+  end
+  false
+end
+
+def save_to_favorites(selected_recipes)
+  isrunning = true
+  while isrunning
+    puts
+    puts "Which recipe would you like to save? Type the number (q to quit):"
+    choice = gets.chomp
+    if choice.start_with?("q")
+      break
+    end
+    recipe = selected_recipes[choice.to_i - 1]
+    # wanted to validate user's choice
+    # if choice == nil
+    #   return recipe_menu
+    # elsif choice.to_i.is_a?(Integer) && choice.to_i < 10
+    #
+    # else
+    #   puts "Invalid input"
+    #   return recipe_menu
+    # end
+    # binding.pry
+
+    if in_user_favorites?(recipe)
       puts
       puts "You've already added this recipe to your favorites!"
-      puts "Returning to menu..."
-      recipe_menu
+      # puts "Returning to menu..."
+      next
+    else
+      puts
+      puts "Save #{recipe.name}? (y/n)"
+      choice = gets.chomp
+      case choice
+      when "y", "yes"
+        $username.add_favorite(recipe)
+        puts
+        puts "#{recipe.name} added to your favorites!"
+        # puts "Returning to menu..."
+      when "n", "no"
+        puts "Returning to main menu..."
+        isrunning = false
+      else
+        puts "Invalid input!"
+      end
     end
   end
 
-  puts
-  puts "Save #{recipe.name}? (y/n)"
-  choice = gets.chomp
-  case choice
-  when "y", "yes"
-    $username.add_favorite(recipe)
-    puts
-    puts "#{recipe.name} added to your favorites!"
-    puts "Returning to menu..."
-    recipe_menu
-  when "n", "no"
-    puts "Returning to menu..."
-    recipe_menu
-  else
-    puts "Invalid input!"
-  end
 end
