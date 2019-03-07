@@ -2,6 +2,20 @@ def welcome
   puts splashpage
 end
 
+def get_user_name
+  puts "Have you been here before? (y)es/(n)o"
+  choice = gets.chomp.downcase
+  if choice.start_with?("y")
+    get_user_name_from_db
+  elsif choice.start_with?("n")
+    create_user_name
+  else
+    puts
+    puts "Please enter (y)es or (n)o"
+    get_user_name
+  end
+end
+
 def get_user_name_from_db
   print "Please enter your username: "
   name = gets.chomp
@@ -43,27 +57,6 @@ def create_user_name
 end
 
 def get_user_name
-#   run = true
-#   puts
-#   puts "Have you been here before? (y/n)"
-#   choice = gets.chomp.downcase
-
-#   if choice == "y" || choice == "yes"
-#     while run
-#       user = get_user_name_from_db
-#       if user == nil
-#         user_equals_nil
-#       else
-#         puts
-#         puts "Welcome back #{user.name}"
-#         run = false
-#         return user
-#       end
-#     end
-#   elsif choice == "n" || choice == "no"
-#     user = create_user_name
-#     puts
-#     puts "Welcome to Foodflix, #{user.name}!"
   print "Have you been here before? (y)es/(n)o: "
   choice = gets.chomp.downcase
   if choice.start_with?("y")
@@ -128,8 +121,3 @@ def menu_selection(choice)
     puts "Invalid input!"
   end
 end
-
-
-# def get_and_return_user_input
-#   choice = gets.chomp
-# end
