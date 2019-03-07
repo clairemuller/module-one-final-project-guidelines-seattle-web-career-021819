@@ -1,6 +1,4 @@
 def welcome
-  puts
-  puts "Hello!  Welcome to Foodflix!"
   puts splashpage
 end
 
@@ -19,26 +17,57 @@ def get_user_name
 end
 
 def get_user_name_from_db
-  puts
-  puts "Please enter your username:"
+  print "Please enter your username: "
   name = gets.chomp
   user = User.find_by(name: name)
   if user == nil
     user_equals_nil
   else
     puts
-    puts "Welcome back, #{user.name}"
+    puts "Welcome back, #{user.name}!"
     return user
+  end
+end
+
+def validate_user_name(name)
+  if User.find_by(name: name) != nil
+    puts "User name already exists"
+    print "Would you like to (u)se this name or (c)reate a new user name? "
+    choice = gets.chomp
+    if choice.start_with?("u")
+      print "Welcome back, #{name}!"
+      return User.find_by(name: name)
+    elsif choice.start_with?("c")
+      create_user_name
+    else
+      puts "Invalid option/choice"
+      get_user_name_from_db
+    end
   end
 end
 
 def create_user_name
   puts
-  puts "Create username:"
+  print "Create username: "
   name = gets.chomp
+  validate_user_name(name)
   puts
   puts "Welcome to Foodflix, #{name}!"
   User.create(name: name)
+end
+
+def get_user_name
+  print "Have you been here before? (y)es/(n)o: "
+  choice = gets.chomp.downcase
+  if choice.start_with?("y")
+    get_user_name_from_db
+  elsif choice.start_with?("n")
+    create_user_name
+  else
+    puts
+    puts "Please enter (y)es or (n)o"
+    get_user_name
+  end
 end
 
 def user_equals_nil
@@ -65,7 +94,7 @@ end
 
 def main_menu
   puts
-  puts "Please pick a number:"
+  puts "Main menu:"
   puts "0. exit"
   puts "1. search for a recipe by ingredient"
   puts "2. view favorite recipes"
@@ -92,8 +121,3 @@ def menu_selection(choice)
     puts "Invalid input!"
   end
 end
-
-
-# def get_and_return_user_input
-#   choice = gets.chomp
-# end
