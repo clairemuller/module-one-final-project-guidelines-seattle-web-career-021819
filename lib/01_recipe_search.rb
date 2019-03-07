@@ -27,11 +27,24 @@ end
 
 def get_recipe_limit(recipe_array, ingredient)
   puts
+  if recipe_array.empty?
+    puts "Sorry, there are no recipes with #{ingredient}!"
+    puts "Let's try again..."
+    recipe_search
+  end
   puts <<~TEXT
   There are #{recipe_array.length} recipes that include #{ingredient}.
   How many would you like to view?
   TEXT
-  choice = gets.chomp
+  choice = gets.chomp.to_i
+
+  if choice > recipe_array.length
+    puts
+    puts "Oops! There are only #{recipe_array.length} recipes!"
+    choice = recipe_array.length
+  else
+    choice
+  end
 end
 
 def view_recipes(recipe_array, limit)

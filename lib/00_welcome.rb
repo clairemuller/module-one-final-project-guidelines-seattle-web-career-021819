@@ -98,7 +98,7 @@ def main_menu
   puts "Main menu:"
   puts "0. exit"
   puts "1. search for a recipe by ingredient"
-  puts "2. view favorite recipes"
+  puts "2. view your favorite recipes"
   puts "3. view most popular recipes"
   choice = gets.chomp
   menu_selection(choice)
