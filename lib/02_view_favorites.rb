@@ -5,12 +5,18 @@ def view_user_favorites
     puts
     puts "You don't have any favorites saved yet!"
     puts "Returning to main menu..."
-    puts
     main_menu
   else
+    puts
+    puts "Here are your favorite recipes:"
+    i = 1
     faves.each do |fave|
-      puts fave.recipe.name
+      puts "#{i}. #{fave.recipe.name}"
+      i += 1
     end
+    puts
+    puts "Returning to main menu..."
+    main_menu
   end
 
 end
