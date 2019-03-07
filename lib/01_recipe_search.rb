@@ -11,7 +11,6 @@ def get_ingredient_from_user
   puts
   puts "Please enter an ingredient:"
   ingredient = gets.chomp.downcase
-  # create_recipe_array(ingredient)
 end
 
 def create_recipe_array(ingredient)
@@ -21,6 +20,7 @@ def create_recipe_array(ingredient)
 end
 
 def get_recipe_limit(recipe_array, ingredient)
+  puts
   puts <<~TEXT
   There are #{recipe_array.length} recipes that include #{ingredient}.
   How many would you like to view?
@@ -44,7 +44,7 @@ def recipe_menu
   choice = gets.chomp
 end
 
-def recipe_menu_selection(choice, selected_recipes)
+def recipe_menu_selection(choice, selected_recipes=nil)
   case choice
   when "0"
     # return to main menu
@@ -63,6 +63,7 @@ def save_to_favorites(selected_recipes)
   puts "Which recipe(s) would you like to save? Type the number(s):"
   choice = gets.chomp
   recipe = selected_recipes[choice.to_i - 1]
+  puts
   puts "Save #{recipe.name}? (y/n)"
   choice = gets.chomp
   case choice
@@ -71,6 +72,8 @@ def save_to_favorites(selected_recipes)
       recipe.id == fav.recipe_id
       puts
       puts "You've already added this recipe to your favorites!"
+      puts "Returning to menu..."
+      puts
       recipe_menu
       end
     else
