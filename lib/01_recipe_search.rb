@@ -14,15 +14,21 @@ def get_ingredient_from_user
 end
 
 def create_recipe_array(ingredient)
+  arr = []
   Recipe.all.select do |recipe|
-    recipe.ingredients.include?(ingredient)
+    recipe.ingredients.split(",").find do |ing|
+      if ing == ingredient
+        arr << recipe
+      end
+    end
   end
+  return arr.uniq
 end
 
 def get_recipe_limit(recipe_array, ingredient)
   puts
   puts <<~TEXT
-  There are #{recipe_array.length - 1} recipes that include #{ingredient}.
+  There are #{recipe_array.length} recipes that include #{ingredient}.
   How many would you like to view?
   TEXT
   choice = gets.chomp
@@ -31,7 +37,7 @@ end
 def view_recipes(recipe_array, limit)
   puts
   puts "Here you go!"
-  recipe_array[1..limit.to_i].each_with_index do |recipe, i|
+  recipe_array[0..limit.to_i].each_with_index do |recipe, i|
     puts
     puts "#{i+1}. #{recipe.name}"
     puts "#{recipe.ingredients}"
