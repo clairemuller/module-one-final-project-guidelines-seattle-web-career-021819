@@ -4,7 +4,22 @@ def welcome
   puts splashpage
 end
 
+def get_user_name
+  puts "Have you been here before? (y)es/(n)o"
+  choice = gets.chomp.downcase
+  if choice.start_with?("y")
+    get_user_name_from_db
+  elsif choice.start_with?("n")
+    create_user_name
+  else
+    puts
+    puts "Please enter (y)es or (n)o"
+    get_user_name
+  end
+end
+
 def get_user_name_from_db
+  puts
   puts "Please enter your username:"
   name = gets.chomp
   user = User.find_by(name: name)
@@ -24,41 +39,6 @@ def create_user_name
   puts
   puts "Welcome to Foodflix, #{name}!"
   User.create(name: name)
-end
-
-def get_user_name
-#   run = true
-#   puts
-#   puts "Have you been here before? (y/n)"
-#   choice = gets.chomp.downcase
-
-#   if choice == "y" || choice == "yes"
-#     while run
-#       user = get_user_name_from_db
-#       if user == nil
-#         user_equals_nil
-#       else
-#         puts
-#         puts "Welcome back #{user.name}"
-#         run = false
-#         return user
-#       end
-#     end
-#   elsif choice == "n" || choice == "no"
-#     user = create_user_name
-#     puts
-#     puts "Welcome to Foodflix, #{user.name}!"
-  puts "Have you been here before? (y)es/(n)o"
-  choice = gets.chomp.downcase
-  if choice.start_with?("y")
-    get_user_name_from_db
-  elsif choice.start_with("n")
-    create_user_name
-  else
-    puts
-    puts "Please enter (y)es or (n)o"
-    get_user_name
-  end
 end
 
 def user_equals_nil
@@ -90,8 +70,8 @@ def main_menu
   puts "1. search for a recipe by ingredient"
   puts "2. view favorite recipes"
   puts "3. view most popular recipes"
-  # choice = gets.chomp
-  # menu_selection(choice)
+  choice = gets.chomp
+  menu_selection(choice)
 end
 
 def menu_selection(choice)
