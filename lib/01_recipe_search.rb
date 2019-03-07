@@ -1,33 +1,50 @@
-# ingredient = get_ingredient_from_user
-page_num = 1
+def recipe_search
+  ingredient = get_ingredient_from_user
+  recipe_array = create_recipe_array(ingredient)
+  limit = get_recipe_limit(recipe_array, ingredient)
+  selected_recipes = view_recipes(recipe_array, limit)
+  rms = recipe_menu
+  recipe_menu_selection(rms, selected_recipes)
+end
 
 def get_ingredient_from_user
   puts
   puts "Please enter an ingredient:"
   ingredient = gets.chomp.downcase
-  get_recipes_by_ingredient(ingredient, page_num)
+  # create_recipe_array(ingredient)
 end
 
-def get_recipes_by_ingredient(ingredient, page_num)
-  url = 'http://www.recipepuppy.com/api/?i='
-  response_string = RestClient.get(url + ingredient + "&p=#{page_num}")
-  response_hash = JSON.parse(response_string)
-  recipes = response_hash["results"]
+def create_recipe_array(ingredient)
+  Recipe.all.select do |recipe|
+    recipe.ingredients.include?(ingredient)
+  end
+end
 
-  recipes.each_with_index do |xx, i|
-    puts "#{i+1}. #{xx["title"].strip}"
-    puts "ingredients: #{xx["ingredients"]}"
+def get_recipe_limit(recipe_array, ingredient)
+  puts <<~TEXT
+  There are #{recipe_array.length} recipes that include #{ingredient}.
+  How many would you like to view?
+  TEXT
+  choice = gets.chomp
+end
+
+def view_recipes(recipe_array, limit)
+  puts "Here you go!"
+  recipe_array[1..limit.to_i].each_with_index do |recipe, i|
+    puts "#{i+1}. #{recipe.name}"
+    puts "#{recipe.ingredients}"
     puts
   end
-  recipe_menu
 end
 
 def recipe_menu
   puts "Please choose one:"
   puts "0. Return to main menu"
   puts "1. Save a recipe to favorites"
-  puts "2. See the next ten recipes"
   choice = gets.chomp
+end
+
+def recipe_menu_selection(choice, selected_recipes)
   case choice
   when "0"
     # return to main menu
@@ -35,32 +52,33 @@ def recipe_menu
   when "1", "save"
     # save a recipe to favorites
     # still working on this method
-    save_to_favorites
-  when "2"
-    # see the next ten recipes
-    # still working on this method
-    page_num += 1
-    get_recipes_by_ingredient(ingredient, page_num)
+    save_to_favorites(selected_recipes)
   else
     puts "Invalid choice!"
   end
 end
 
-def save_to_favorites
-  # still working on this method
+def save_to_favorites(selected_recipes)
   puts
-  puts "Which recipe would you like to save? Type the number:"
-  choice = gets.chomp.downcase
-  if choice == "y"
-
-  elsif choice == "n"
-
+  puts "Which recipe(s) would you like to save? Type the number(s):"
+  choice = gets.chomp
+  recipe = selected_recipes[choice.to_i - 1]
+  puts "Save #{recipe.name}? (y/n)"
+  choice = gets.chomp
+  case choice
+  when "y", "yes"
+    if $username.favorites.find do |fav|
+      recipe.id == fav.recipe_id
+      puts
+      puts "You've already added this recipe to your favorites!"
+      recipe_menu
+      end
+    else
+      $username.add_favorite(recipe)
+    end
+  when "n", "no"
+    recipe_menu
   else
-    puts "Invalid choice!"
+    "Invalid input!"
   end
-end
-
-def next_ten
-  binding.pry
-
 end
