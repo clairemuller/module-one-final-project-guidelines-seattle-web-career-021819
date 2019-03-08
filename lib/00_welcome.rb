@@ -103,6 +103,7 @@ def main_menu
   puts "2. view your favorite recipes"
   puts "3. view most popular recipes"
   puts "4. get recommendtions"
+  puts "5. delete a recipe from your favorites list"
   choice = gets.chomp
   menu_selection(choice)
 end
@@ -123,6 +124,8 @@ def menu_selection(choice)
     most_favorite_recipes
   when "4"
     recommendations
+  when "5"
+    get_recipe_to_delete
   else
     puts
     puts "Invalid input!"
