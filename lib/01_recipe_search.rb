@@ -51,7 +51,7 @@ end
 def view_recipes(recipe_array, limit)
   puts
   puts "Here you go!"
-  recipe_array[0..limit.to_i].each_with_index do |recipe, i|
+  recipe_array[0...limit.to_i].each_with_index do |recipe, i|
     puts
     puts "#{i+1}. #{recipe.name}"
     puts "#{recipe.ingredients}"
