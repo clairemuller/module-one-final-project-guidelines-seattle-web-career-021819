@@ -18,7 +18,9 @@ def create_recipe_array(ingredient)
   arr = []
   Recipe.all.select do |recipe|
     recipe.ingredients.split(",").find do |ing|
-      if ing == ingredient
+      if ing.strip == ingredient ||
+        ing.strip == (ingredient + " ") ||
+        ing.strip == (" " + ingredient)
         arr << recipe
       end
     end
@@ -51,10 +53,21 @@ end
 def view_recipes(recipe_array, limit)
   puts
   puts "Here you go!"
-  recipe_array[0..limit.to_i].each_with_index do |recipe, i|
+  # count = 1
+  # disphash = {}
+  # recipe_array[0..limit.to_i].each do |recipe|
+  #   disphash[:count] = count
+  #   binding.pry
+  #   disphash[:name] = recipe.name
+  #   disphash[:ingredients] = recipe.ingredients
+  #   count += 1
+  # end
+  # Formatador.display_table(disphash)
+  recipe_array[0...limit.to_i].each_with_index do |recipe, i|
     puts
     puts "#{i+1}. #{recipe.name}"
     puts "#{recipe.ingredients}"
+    sleep(0.5)
   end
 end
 

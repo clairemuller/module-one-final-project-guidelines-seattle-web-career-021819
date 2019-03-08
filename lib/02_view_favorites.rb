@@ -13,6 +13,7 @@ def view_user_favorites
     faves.each do |fave|
       puts "#{i}. #{fave.recipe.name}"
       i += 1
+      sleep(0.5)
     end
     puts
     puts "Returning to main menu..."
