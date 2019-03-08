@@ -16,7 +16,7 @@ def most_favorite_recipes
   show_favorites(results, input)
   sleep(3)
   puts
-  puts "Screen will clear in 5 seconds"
+  puts "Screen will clear in 5 seconds..."
   sleep(5)
   system "clear"
   main_menu

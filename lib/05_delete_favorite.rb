@@ -6,11 +6,13 @@ def get_recipe_to_delete
 end
 
 def display_faves(favorites)
+  puts
+  puts "Here are all your favorites:"
   favorites.each_with_index do |fave, i|
-    #
     recipe = Recipe.find(fave.recipe_id)
     puts "#{i+1}. #{recipe.name}"
   end
+  puts
   print "Which recipe would you like to remove from favorites? "
   rec_num = gets.chomp.to_i
   puts

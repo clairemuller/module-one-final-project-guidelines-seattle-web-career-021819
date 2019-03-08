@@ -104,21 +104,10 @@ def save_to_favorites(selected_recipes)
       break
     end
     recipe = selected_recipes[choice.to_i - 1]
-    # wanted to validate user's choice
-    # if choice == nil
-    #   return recipe_menu
-    # elsif choice.to_i.is_a?(Integer) && choice.to_i < 10
-    #
-    # else
-    #   puts "Invalid input"
-    #   return recipe_menu
-    # end
-    # binding.pry
 
     if in_user_favorites?(recipe)
       puts
       puts "You've already added this recipe to your favorites!"
-      # puts "Returning to menu..."
       next
     else
       puts
@@ -129,8 +118,6 @@ def save_to_favorites(selected_recipes)
         $username.add_favorite(recipe)
         puts
         puts "#{recipe.name} added to your favorites!"
-        binding.pry
-        # puts "Returning to menu..."
       when "n", "no"
         puts "Returning to main menu..."
         isrunning = false

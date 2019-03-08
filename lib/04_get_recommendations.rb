@@ -42,7 +42,6 @@ end
 def display_mcg(mcg)
   puts
   puts "The most common ingredient in your favorite recipes list is: #{mcg[0].first}"
-  puts
 end
 
 def get_id_array(rec_array)
@@ -61,11 +60,12 @@ def display_three_random_recommendations(id_array, first_mcg)
       three_recipes << recipe
     end
   end
+  puts
   puts "Here are your recommended recipes with #{first_mcg}:"
   three_recipes.each_with_index do |recipe, i|
+    puts
     puts "#{i+1}. #{recipe.name}"
     puts "#{recipe.ingredients}"
-    puts
     sleep(1)
   end
 end
