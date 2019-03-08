@@ -19,5 +19,8 @@ Welcome to our Mod 1 project! FoodFlix is a command line recipe search that allo
 ## Sources
 
 [Recipe Puppy API](http://www.recipepuppy.com/api/)
-[Text ASCII Art Generator](http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20)
-[ASCII Art](https://www.asciiart.eu/)
+Text ASCII
+
+[source 1](http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20)
+
+[source 2](https://www.asciiart.eu/)
