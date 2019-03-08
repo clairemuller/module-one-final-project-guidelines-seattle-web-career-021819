@@ -4,8 +4,6 @@
 
 Welcome to our Mod 1 project! FoodFlix is a command line recipe search that allows a user to search for recipes by an ingredient and save them to their favorites list.
 
-## User Stories
-
 ### As a user, I want to:
 * enter an ingredient and get a list of recipes that use that ingredient
 * add or remove recipes from my favorites
@@ -14,7 +12,9 @@ Welcome to our Mod 1 project! FoodFlix is a command line recipe search that allo
 * get recommended recipes based on my favorites
 
 ## Installation
-1. clone this
+1. clone this repository
+2. run bundle install to install the necessary gems
+3. run ruby bin/run.db to start!
 
 ## Sources
 
