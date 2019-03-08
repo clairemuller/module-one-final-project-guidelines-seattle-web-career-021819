@@ -1,5 +1,7 @@
 def welcome
+  system "clear"
   puts splashpage
+  puts food
 end
 
 def get_user_name
@@ -100,6 +102,7 @@ def main_menu
   puts "1. search for a recipe by ingredient"
   puts "2. view your favorite recipes"
   puts "3. view most popular recipes"
+  puts "4. get recommendtions"
   choice = gets.chomp
   menu_selection(choice)
 end
@@ -118,6 +121,8 @@ def menu_selection(choice)
   when "3"
     # view most popular recipes
     most_favorite_recipes
+  when "4"
+    recommendations
   else
     puts
     puts "Invalid input!"
