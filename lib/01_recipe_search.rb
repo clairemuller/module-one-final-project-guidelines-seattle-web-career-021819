@@ -126,6 +126,7 @@ def save_to_favorites(selected_recipes)
         $username.add_favorite(recipe)
         puts
         puts "#{recipe.name} added to your favorites!"
+        binding.pry
         # puts "Returning to menu..."
       when "n", "no"
         puts "Returning to main menu..."
