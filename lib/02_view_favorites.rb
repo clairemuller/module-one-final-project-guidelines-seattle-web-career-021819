@@ -1,5 +1,5 @@
 def view_user_favorites
-  faves = $username.favorites
+  faves = $username.favorites.reload
 
   if faves.empty?
     puts
