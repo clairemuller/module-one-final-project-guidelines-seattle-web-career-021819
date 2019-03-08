@@ -18,7 +18,9 @@ def create_recipe_array(ingredient)
   arr = []
   Recipe.all.select do |recipe|
     recipe.ingredients.split(",").find do |ing|
-      if ing == ingredient
+      if ing.strip == ingredient ||
+        ing.strip == (ingredient + " ") ||
+        ing.strip == (" " + ingredient)
         arr << recipe
       end
     end
@@ -55,6 +57,7 @@ def view_recipes(recipe_array, limit)
     puts
     puts "#{i+1}. #{recipe.name}"
     puts "#{recipe.ingredients}"
+    sleep(0.5)
   end
 end
 
