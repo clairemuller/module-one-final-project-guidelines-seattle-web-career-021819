@@ -53,16 +53,6 @@ end
 def view_recipes(recipe_array, limit)
   puts
   puts "Here you go!"
-  # count = 1
-  # disphash = {}
-  # recipe_array[0..limit.to_i].each do |recipe|
-  #   disphash[:count] = count
-  #   binding.pry
-  #   disphash[:name] = recipe.name
-  #   disphash[:ingredients] = recipe.ingredients
-  #   count += 1
-  # end
-  # Formatador.display_table(disphash)
   recipe_array[0...limit.to_i].each_with_index do |recipe, i|
     puts
     puts "#{i+1}. #{recipe.name}"
@@ -139,6 +129,7 @@ def save_to_favorites(selected_recipes)
         $username.add_favorite(recipe)
         puts
         puts "#{recipe.name} added to your favorites!"
+        binding.pry
         # puts "Returning to menu..."
       when "n", "no"
         puts "Returning to main menu..."
